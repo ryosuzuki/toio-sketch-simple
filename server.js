@@ -31,6 +31,6 @@ async function main(io) {
   cube = await new NearestScanner().start()
   cube.connect()
   cube.on('id:position-id', (data) => {
-    io.sockets.emit('pos', { cubes: data })
+    io.sockets.emit('pos', { cubes: [data] })
   })
 }
