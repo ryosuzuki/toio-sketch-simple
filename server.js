@@ -22,25 +22,24 @@ server.listen(3000, () => {
 })
 
 let cube = null
-io.on('connection', (socket) => {
-  console.log('connected')
-  setInterval(() => {
-    if (cube) {
-      io.sockets.emit('pos', { cubes: [cube] })
-    }
-  }, 1000)
+// io.on('connection', (socket) => {
+//   console.log('connected')
+//   setInterval(() => {
+//     if (cube) {
+//       io.sockets.emit('pos', { cubes: [cube] })
+//     }
+//   }, 1000)
+// })
 
-})
-
-
-console.log('toio init')
-init(io)
-
-let num = 1
-async function init(io) {
-  console.log('scan')
-  cube = await new NearestScanner().start()
-  console.log('scan done')
+async function main() {
+  const cube = await new NearestScanner().start()
   cube.connect()
-  console.log('connect done')
+  // set listeners to show toio ID information
+  cube
+    .on('id:position-id', data => console.log('[POS ID]', data))
+    .on('id:standard-id', data => console.log('[STD ID]', data))
+    .on('id:position-id-missed', () => console.log('[POS ID MISSED]'))
+    .on('id:standard-id-missed', () => console.log('[STD ID MISSED]'))
 }
+
+main()
