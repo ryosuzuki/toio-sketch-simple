@@ -22,17 +22,17 @@ server.listen(3000, () => {
 })
 
 let cube = null
-// io.on('connection', (socket) => {
-//   console.log('connected')
-//   setInterval(() => {
-//     if (cube) {
-//       io.sockets.emit('pos', { cubes: [cube] })
-//     }
-//   }, 1000)
-// })
+io.on('connection', (socket) => {
+  console.log('connected')
+  setInterval(() => {
+    if (cube) {
+      io.sockets.emit('pos', { cubes: [cube] })
+    }
+  }, 1000)
+})
 
 async function main() {
-  const cube = await new NearestScanner().start()
+  cube = await new NearestScanner().start()
   cube.connect()
   // set listeners to show toio ID information
   cube
