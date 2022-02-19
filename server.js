@@ -21,17 +21,21 @@ server.listen(3000, () => {
   console.log('listening 3000')
 })
 
-
+let cube = null
 io.on('connection', (socket) => {
   console.log('connected')
-  init(io)
+  setInterval(() => {
+    if (cube) {
+      io.sockets.emit('pos', { cubes: [cube] })
+    }
+  }, 1000)
+
 })
+
+init(io)
 
 let num = 1
 async function init(io) {
-  let cube = await new NearestScanner().start()
+  cube = await new NearestScanner().start()
   cube.connect()
-  setInterval(() => {
-    io.sockets.emit('pos', { cubes: [cube] })
-  }, 1000)
 }
