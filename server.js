@@ -30,11 +30,15 @@ io.on('connection', (socket) => {
 let num = 1
 let cubes = new Array(num)
 async function init(io) {
-  cubes = await new NearScanner(num).start()
-  for (let i = 0; i < num; i++) {
-    await cubes[i].connect()
+  try {
+    cubes = await new NearScanner(num).start()
+    for (let i = 0; i < num; i++) {
+      await cubes[i].connect()
+    }
+    setInterval(() => {
+      io.sockets.emit('pos', { cubes: cubes })
+    }, 1000)
+  } catch (err) {
+    console.log(err)
   }
-  setInterval(() => {
-    io.sockets.emit('pos', { cubes: cubes })
-  }, 1000)
 }
