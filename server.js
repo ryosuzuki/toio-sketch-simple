@@ -32,10 +32,15 @@ io.on('connection', (socket) => {
 
 })
 
+
+console.log('toio init')
 init(io)
 
 let num = 1
 async function init(io) {
+  console.log('scan')
   cube = await new NearestScanner().start()
+  console.log('scan done')
   cube.connect()
+  console.log('connect done')
 }
