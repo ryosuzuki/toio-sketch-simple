@@ -33,7 +33,7 @@ async function init(io) {
   try {
     cubes = await new NearScanner(num).start()
     for (let i = 0; i < num; i++) {
-      await cubes[i].connect()
+      cubes[i].connect()
     }
     setInterval(() => {
       io.sockets.emit('pos', { cubes: cubes })
